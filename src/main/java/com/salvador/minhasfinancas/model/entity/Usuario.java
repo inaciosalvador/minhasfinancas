@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "usuario", schema = "fincancas")
+@Table(name = "usuario", schema = "financas")
 @Setter
 @Getter
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 // @Data ele substitui todas as declarações acima
 public class Usuario {
 
