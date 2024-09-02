@@ -12,4 +12,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Pode-se usar esta convenção para verificar qualquer coluna, alterando apenas o nome do metodo
     // por exemplo existByNome()
     boolean existsByEmail(String email);
+
+    Optional<Usuario> findByEmail(String email);
 }

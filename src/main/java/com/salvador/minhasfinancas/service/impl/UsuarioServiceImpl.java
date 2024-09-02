@@ -1,10 +1,14 @@
 package com.salvador.minhasfinancas.service.impl;
 
+import com.salvador.minhasfinancas.exception.ErroAutenticacao;
 import com.salvador.minhasfinancas.exception.RegraNegocioException;
 import com.salvador.minhasfinancas.model.entity.Usuario;
 import com.salvador.minhasfinancas.model.repository.UsuarioRepository;
 import com.salvador.minhasfinancas.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -17,17 +21,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario autenticar(String email, String senha) {
-        return null;
+        Optional<Usuario> usuario = repository.findByEmail(email);
+
+        if (!usuario.isPresent()) {
+            throw new ErroAutenticacao("Usuario não encontrado para o email informado");
+        }
+
+        if (!usuario.get().getSenha().equals(senha)) {
+            throw new ErroAutenticacao("Senha invalida.");
+        }
+
+        return usuario.get();
+
     }
 
     @Override
+    @Transactional
     public Usuario salvarUsuario(Usuario usuario) {
-        return null;
+        validarEmail(usuario.getEmail());
+        return repository.save(usuario);
     }
 
     @Override
     public void validarEmail(String email) {
-
         // aqui utiliza-se a Query Method (existByEmail) criada no UsuarioRepository
         boolean existe = repository.existsByEmail(email);
         if (existe) {
