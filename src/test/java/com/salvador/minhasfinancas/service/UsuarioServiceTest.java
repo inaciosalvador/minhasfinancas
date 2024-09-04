@@ -3,6 +3,7 @@ package com.salvador.minhasfinancas.service;
 import com.salvador.minhasfinancas.exception.RegraNegocioException;
 import com.salvador.minhasfinancas.model.entity.Usuario;
 import com.salvador.minhasfinancas.model.repository.UsuarioRepository;
+import com.salvador.minhasfinancas.service.UsuarioService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UsuarioServiceTest {
     @Autowired
     UsuarioRepository repository;
 
-    @Test()
+    @Test
     public void deveValidarEmail(){
 
         // Cenario

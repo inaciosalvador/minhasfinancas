@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,8 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DataJpaTest // Cria uma instancia de db em memoria (temporaria)
-// 1º teste de integração, pois o teste depende de um componente externo
-// neste caso, o banco de dados postgres
 public class UsuarioRepositoryTest {
 
     @Autowired // injetando a intancia dessa interface
@@ -28,13 +24,12 @@ public class UsuarioRepositoryTest {
     TestEntityManager entityManager; // Contem operações de CRUD na base de dados em teste
 
     @Test
-    //Todos os metodos de test tem return void
-    public void deveVerificarAExistenciaDdeUmEmail() {
+    public void deveVerificarAExistenciaDeUmEmail() {
         // Para o testar a query method existByEmail precisamos de 3 elementos que são os seguintes:
 
         // 1º Cenario
-        Usuario usuario = Usuario.builder().nome("Inacio").email("inacio@email.com").build(); //
-        entityManager.persist(usuario);
+        Usuario usuario = Usuario.builder().nome("Inacio").email("inacio@email.com").build();
+        Usuario persist = entityManager.persist(usuario);
 
         // 2º Ação ou execução
         boolean result = repository.existsByEmail("inacio@email.com");
@@ -56,4 +51,8 @@ public class UsuarioRepositoryTest {
 
     }
 
+
+
 }
+
+// tentar conectar outro banco no proprio postgress.
